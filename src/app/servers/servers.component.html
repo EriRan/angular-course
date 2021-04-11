@@ -4,13 +4,7 @@
 <!-- We are binding the value of disabled into a variable from servers.component.ts-->
 <!-- (click) is the way event binding is done in Angular-->
 <p>{{ serverName }}</p>
-<button
-  class="btn btn-primary"
-  [disabled]="!allowNewServer"
-  (click)="onCreateServer()"
->
-  Add Server
-</button>
+<button class="btn btn-primary" (click)="onCreateServer()">Add Server</button>
 <!-- <p>{{ serverCreationStatus }}</p> -->
 <!-- Star * is a structural directive. It is needed for these directives -->
 <!-- ngIf has to have a function that returns a boolean -->
