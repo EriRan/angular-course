@@ -1,2 +1,7 @@
 <!-- You can write expressions inside double curly braces. No multilines though. Ternary expressions are ok -->
-<p>Server with ID {{ serverId }} is {{ getServerStatus() }}</p>
+<p
+  [ngStyle]="{ backgroundColor: getColor() }"
+  [ngClass]="{ online: serverStatus === 'online' }"
+>
+  Server with ID {{ serverId }} is {{ getServerStatus() }}
+</p>
