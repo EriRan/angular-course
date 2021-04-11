@@ -1,4 +1,12 @@
 <!-- We are binding the value of disabled into a variable from servers.component.ts-->
-<button class="btn btn-primary" [disabled]="!allowNewServer">Add Server</button>
+<!-- (click) is the way event binding is done in Angular-->
+<button
+  class="btn btn-primary"
+  [disabled]="!allowNewServer"
+  (click)="onCreateServer()"
+>
+  Add Server
+</button>
+<p>{{ serverCreationStatus }}</p>
 <app-server></app-server>
 <app-server></app-server>
