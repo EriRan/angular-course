@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -17,7 +18,7 @@ import { WarningAlertComponent } from './warning-alert/warning-alert.component';
     WarningAlertComponent,
     SuccessAlertComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, FormsModule],
   providers: [],
   //Which component should be aware of at the app startup
   bootstrap: [AppComponent],
