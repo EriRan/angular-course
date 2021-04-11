@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { ServerComponent } from './server/server.component';
+import { ServersComponent } from './servers/servers.component';
 
 //Some kind of definition file for the component?
+//NgModule here is also a decorator
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ServerComponent, ServersComponent],
   imports: [BrowserModule],
   providers: [],
+  //Which component should be aware of at the app startup
   bootstrap: [AppComponent],
 })
 export class AppModule {}
