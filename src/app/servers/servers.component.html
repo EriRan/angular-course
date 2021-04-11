@@ -19,5 +19,5 @@
   Server was created! Server name is {{ serverName }}
 </p>
 <ng-template #noServer><p>No server has yet been created!</p></ng-template>
-<app-server></app-server>
-<app-server></app-server>
+<!-- Star indicates a structural directive: it changes the DOM (?)-->
+<app-server *ngFor="let server of servers"></app-server>
