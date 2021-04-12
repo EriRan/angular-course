@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServersComponent implements OnInit {
   paragraphToggled = false;
-  buttonClicks: Array<number> = [];
+  buttonClicks: Array<string> = [];
 
   constructor() {
   }
@@ -24,10 +24,10 @@ export class ServersComponent implements OnInit {
     } else {
       this.paragraphToggled = true;
     }
-    this.buttonClicks.push(this.buttonClicks.length + 1);
+    this.buttonClicks.push(new Date().getTime().toString());
   }
 
-  getButtonClicksLength(): number {
-    return this.buttonClicks.length;
+  shouldUseSpecialStyle(index: number): boolean {
+    return index >= 5;
   }
 }

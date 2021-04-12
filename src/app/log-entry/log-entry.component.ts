@@ -13,6 +13,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class LogEntryComponent implements OnInit {
   @Input() value = 0;
+  @Input() useSpecialStyle = false;
 
   constructor() {
   }

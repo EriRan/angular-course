@@ -1,2 +1,2 @@
-<p [ngStyle]="{backgroundColor: value > 4 ? 'blue' : '' }"
-   [ngClass]="{ afterFourth: value > 4}">{{value}}</p>
+<p [ngStyle]="{backgroundColor: useSpecialStyle ? 'blue' : '' }"
+   [ngClass]="{ afterFourth: useSpecialStyle}">{{value}}</p>

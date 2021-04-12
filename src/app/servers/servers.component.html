@@ -11,4 +11,4 @@
 </div>
 <hr/>
 
-<app-log-entry *ngFor="let buttonClick of buttonClicks" [value]="buttonClick" [buttonClicksLength]="getButtonClicksLength()"></app-log-entry>
+<app-log-entry *ngFor="let buttonClick of buttonClicks; let i = index" [value]="buttonClick" [useSpecialStyle]="shouldUseSpecialStyle(i)"></app-log-entry>
