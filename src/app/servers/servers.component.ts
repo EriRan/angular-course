@@ -24,14 +24,14 @@ export class ServersComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onCreateServer() {
+  onCreateServer(): void {
     this.serverCreated = true;
     this.serverCreationStatus =
       'Server was created. Name is: ' + this.serverName;
     this.servers.push(this.serverName);
   }
 
-  onUpdateServerName(event: Event) {
+  onUpdateServerName(event: Event): void {
     if (!event || !event.currentTarget) {
       return;
     }
