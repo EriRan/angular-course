@@ -7,36 +7,27 @@ import { Component, OnInit } from '@angular/core';
   //selector: '[app-servers]',
   selector: '.app-servers',
   templateUrl: './servers.component.html',
-  styleUrls: ['./servers.component.css'],
+  styles: [],
 })
 export class ServersComponent implements OnInit {
-  allowNewServer = false;
-  serverCreationStatus = 'No server was created!';
-  serverName: string = '';
-  serverCreated = false;
-  servers = ['TestServer', 'TestServer2'];
+  paragraphToggled = false;
+  buttonClicks: Array<number> = [];
 
   constructor() {
-    setTimeout(() => {
-      this.allowNewServer = true;
-    }, 2000);
   }
 
   ngOnInit(): void {}
 
-  onCreateServer(): void {
-    this.serverCreated = true;
-    this.serverCreationStatus =
-      'Server was created. Name is: ' + this.serverName;
-    this.servers.push(this.serverName);
+  toggleParagraph(): void {
+    if (this.paragraphToggled) {
+      this.paragraphToggled = false;
+    } else {
+      this.paragraphToggled = true;
+    }
+    this.buttonClicks.push(this.buttonClicks.length + 1);
   }
 
-  onUpdateServerName(event: Event): void {
-    if (!event || !event.currentTarget) {
-      return;
-    }
-    if (event.currentTarget instanceof HTMLInputElement) {
-      this.serverName = (event.currentTarget as HTMLInputElement).value;
-    }
+  getButtonClicksLength(): number {
+    return this.buttonClicks.length;
   }
 }

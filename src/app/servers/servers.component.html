@@ -1,23 +1,14 @@
 <label>Server Name</label>
-<!--<input type="text" class="form-control" (input)="onUpdateServerName($event)" /> -->
-<input type="text" class="form-control" [(ngModel)]="serverName" />
-<!-- We are binding the value of disabled into a variable from servers.component.ts-->
-<!-- (click) is the way event binding is done in Angular-->
-<p>{{ serverName }}</p>
 <button
   class="btn btn-primary"
-  [disabled]="!allowNewServer"
-  (click)="onCreateServer()"
+  (click)="toggleParagraph()"
 >
-  Add Server
+  Display Details
 </button>
-<!-- <p>{{ serverCreationStatus }}</p> -->
-<!-- Star * is a structural directive. It is needed for these directives -->
-<!-- ngIf has to have a function that returns a boolean -->
-<!-- # some kindd of marker. It can be toggled like in the else below -->
-<p *ngIf="serverCreated; else noServer">
-  Server was created! Server name is {{ serverName }}
-</p>
-<ng-template #noServer><p>No server has yet been created!</p></ng-template>
-<!-- Star indicates a structural directive: it changes the DOM (?)-->
-<app-server *ngFor="let server of servers"></app-server>
+<div>
+  <p *ngIf="paragraphToggled">Secret Password
+    = tuna</p>
+</div>
+<hr/>
+
+<app-log-entry *ngFor="let buttonClick of buttonClicks" [value]="buttonClick" [buttonClicksLength]="getButtonClicksLength()"></app-log-entry>

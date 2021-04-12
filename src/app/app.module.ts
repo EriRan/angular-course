@@ -7,6 +7,7 @@ import { ServerComponent } from './server/server.component';
 import { ServersComponent } from './servers/servers.component';
 import { SuccessAlertComponent } from './success-alert/success-alert.component';
 import { WarningAlertComponent } from './warning-alert/warning-alert.component';
+import { LogEntryComponent } from './log-entry/log-entry.component';
 
 //Some kind of definition file for the component?
 //NgModule here is also a decorator
@@ -17,6 +18,7 @@ import { WarningAlertComponent } from './warning-alert/warning-alert.component';
     ServersComponent,
     WarningAlertComponent,
     SuccessAlertComponent,
+    LogEntryComponent,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],
