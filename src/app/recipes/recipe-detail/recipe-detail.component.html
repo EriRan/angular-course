@@ -9,14 +9,14 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12">
-    <div class="btn-group">
-      <button type="button" class="btn btn-primary dropdown-toggle">Manage Recipe</button>
-      <ul class="dropdown-menu">
-        <li><a href="#">To Shopping List</a></li>
-        <li><a href="#">Edit Recipe</a></li>
-        <li><a href="#">Delete Recipe</a></li>
-      </ul>
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="recipe-detail-manage-dropdown" ngbDropdownToggle>Manage Recipe</button>
+      <div ngbDropdownMenu aria-labelledby="recipe-detail-manage-dropdown">
+        <button ngbDropdownItem>To Shopping List</button>
+        <button ngbDropdownItem>Edit Recipe</button>
+        <button ngbDropdownItem>Delete Recipe</button>
+      </div>
     </div>
   </div>
 </div>
