@@ -12,6 +12,8 @@ export class UnlessDirective {
     }
   }
 
+  //Template is the ng-template like element, so the current element where this directive is applied is stored in it
+  //ViewContainer == Where should we render it? A real place in the dom
   constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef) { }
 
 }
