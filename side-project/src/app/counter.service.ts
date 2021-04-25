@@ -3,11 +3,17 @@ import { Injectable } from "@angular/core";
 @Injectable({providedIn: 'root'})
 export class CounterService {
 
-    count = 0;
+    activeOperationsDone = 0;
+    inactiveOperationsDone = 0;
 
-    increment() {
-        this.count++;
-        console.log('Count is now: ' + this.count);
+    incrementActive() {
+        this.activeOperationsDone++;
+        console.log('Active count is now: ' + this.activeOperationsDone);
+    }
+
+    incrementInactive() {
+        this.inactiveOperationsDone++;
+        console.log('Inactive count is now: ' + this.inactiveOperationsDone);
     }
     
 }
