@@ -1,17 +1,27 @@
 <div class="row">
   <div class="col-xs-12">
-    <img [src]="recipe.imagePath" alt={{recipe.name}} class="img-responsive">
+    <img
+      [src]="recipe.imagePath"
+      alt="{{ recipe.name }}"
+      class="img-responsive"
+    />
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <h1>{{recipe.name}}</h1>
+    <h1>{{ recipe.name }}</h1>
   </div>
 </div>
 <div class="row">
   <div class="col">
     <div ngbDropdown class="d-inline-block">
-      <button class="btn btn-outline-primary" id="recipe-detail-manage-dropdown" ngbDropdownToggle>Manage Recipe</button>
+      <button
+        class="btn btn-outline-primary"
+        id="recipe-detail-manage-dropdown"
+        ngbDropdownToggle
+      >
+        Manage Recipe
+      </button>
       <div ngbDropdownMenu aria-labelledby="recipe-detail-manage-dropdown">
         <button ngbDropdownItem>To Shopping List</button>
         <button ngbDropdownItem>Edit Recipe</button>
@@ -22,11 +32,18 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    {{recipe.description}}
+    {{ recipe.description }}
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    Ingredients
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let ingredient of recipe.ingredients"
+      >
+      {{ingredient.name}} - {{ingredient.amount}}
+    </li>
+    </ul>
   </div>
 </div>
