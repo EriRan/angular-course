@@ -18,4 +18,10 @@ ingredientsChanged = new EventEmitter<Ingredient[]>();
     this.ingredients.push(ingredient);
     this.ingredientsChanged.emit(this.ingredients.slice());
   }
+
+  addIngredients(ingredients: Ingredient[]) {
+    //Dot dot dot is a spread operator. Turns an array into multiple pararameters
+    this.ingredients.push(...ingredients);
+    this.ingredientsChanged.emit(this.ingredients.slice());
+  }
 }
