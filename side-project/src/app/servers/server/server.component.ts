@@ -28,6 +28,9 @@ export class ServerComponent implements OnInit {
 
   onEdit() {
     //We are already have the servers and the id in the URL, so we can just append edit to the end
-    this.router.navigate(["edit"], { relativeTo: this.route });
+    this.router.navigate(["edit"], {
+      relativeTo: this.route,
+      queryParamsHandling: "preserve",
+    });
   }
 }
