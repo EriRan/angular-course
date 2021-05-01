@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  onLoadServers() {
+    // This could have really complex backend calls, then it renders the servers!!!!
+    //This is how you trigger the router programmatically
+    this.router.navigate(['/servers']);
   }
 
 }
