@@ -26,6 +26,10 @@ export class RecipeService {
     ),
   ];
 
+  getRecipe(index: number) {
+    return this.recipes.slice()[index];
+  }
+
   getRecipes() {
     //Returns a new array that contains exact copy
     return this.recipes.slice();
