@@ -10,8 +10,4 @@ import {Component, EventEmitter, Output} from '@angular/core';
 export class HeaderComponent {
   public isMenuCollapsed = true;
   @Output() featureSelected = new EventEmitter<string>();
-
-  onSelect(feature: string): void {
-    this.featureSelected.emit(feature);
-  }
 }
