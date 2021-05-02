@@ -56,7 +56,7 @@ export class EditServerComponent implements OnInit, CanComponentDeactivate {
       !this.changesSaved
     ) {
       //Do you want to discard the changes dialog will be popped out
-      return confirm("");
+      return confirm();
     }
   }
 }
