@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -28,6 +29,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
     ShoppingListComponent,
     ShoppingEditComponent,
     RecipeStartComponent,
+    RecipeEditComponent,
   ],
   imports: [BrowserModule, FormsModule, NgbModule, AppRoutingModule],
   providers: [ShoppingListService],
