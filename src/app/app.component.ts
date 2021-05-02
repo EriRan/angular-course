@@ -6,10 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'], // This can also be just style if you want to add inline style. I think inline styles are gay
 })
-export class AppComponent {
-  loadedFeature = 'recipe';
-
-  onNavigate(feature: string): void {
-    this.loadedFeature = feature;
-  }
-}
+export class AppComponent {}
