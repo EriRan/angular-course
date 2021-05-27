@@ -23,6 +23,7 @@ export class AppComponent {
   suggestUserName() {
     const suggestedName = "Superuser";
     this.signupForm.form.patchValue({ userData: { username: suggestedName } });
+    console.log(this.user);
   }
 
   onSubmit() {
@@ -33,5 +34,6 @@ export class AppComponent {
     this.user.answer = this.signupForm.value.questionAnswer;
     this.user.gender = this.signupForm.value.gender;
 
+    this.signupForm.resetForm();
   }
 }
