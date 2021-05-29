@@ -26,9 +26,7 @@
                 >Haha your name is forbidden!</span
               >
               <span
-                *ngIf="
-                  signupForm.get('userData.username').errors['required']
-                "
+                *ngIf="signupForm.get('userData.username').errors['required']"
                 >This field is required</span
               >
             </span>
@@ -47,8 +45,17 @@
                 signupForm.get('userData.email').touched
               "
               class="help-block"
-              >Email is incorrect</span
             >
+              <span
+                *ngIf="
+                signupForm.get('userData.email').errors && signupForm.get('userData.email').errors['emailIsForbidden']
+                "
+                >Haha your email is forbidden!</span
+              >
+              <span *ngIf="signupForm.get('userData.email').errors && signupForm.get('userData.email').errors['required']"
+                >This field is required</span
+              >
+            </span>
           </div>
         </div>
 
