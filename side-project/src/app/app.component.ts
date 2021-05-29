@@ -46,6 +46,7 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signupForm);
+    this.signupForm.reset({gender: "male"});
   }
   /**
    * Returns a key-value. This is new Typescript syntax to me
