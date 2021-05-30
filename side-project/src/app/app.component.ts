@@ -24,17 +24,15 @@ export class AppComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       projectStatus: new FormControl("", Validators.required),
     });
-    this.projectForm.valueChanges.subscribe((change) => console.log(change));
   }
 
   onSubmit() {
-    console.log(this.projectForm);
-    this.projectForm.reset();
+    console.log(this.projectForm.value);
   }
 
   changeStatus(e) {
-    this.projectForm.get("projectStatus").setValue(e.target.value, {
-      onlySelf: true,
+    this.projectForm.patchValue({
+      projectStatus: e.target.value,
     });
   }
 
