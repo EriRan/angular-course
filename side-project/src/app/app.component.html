@@ -1,6 +1,82 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="projectName">Username</label>
+          <input
+            type="text"
+            id="projectName"
+            class="form-control"
+            formControlName="projectName"
+          />
+          <span
+            *ngIf="
+              !projectForm.get('projectName').valid &&
+              projectForm.get('projectName').touched
+            "
+            class="help-block"
+          >
+            <span
+              *ngIf="
+                projectForm.get('projectName').errors &&
+                projectForm.get('projectName').errors['projectNameIsForbidden']
+              "
+              >Haha your project name is forbidden!</span
+            >
+            <span
+              *ngIf="
+                projectForm.get('projectName').errors &&
+                projectForm.get('projectName').errors['required']
+              "
+              >Project name is required</span
+            >
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            id="email"
+            class="form-control"
+            formControlName="email"
+          />
+          <span
+            *ngIf="
+              !projectForm.get('email').valid &&
+              projectForm.get('email').touched
+            "
+            class="help-block"
+          >
+            Invaid email
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="projectStatus">Project Status</label>
+          <select
+            formControl="projectStatus"
+            name="projectStatus-name"
+            id="projectStatus-select"
+            class="form-control"
+            (change)="changeStatus($event)"
+          >
+            <option
+              *ngFor="let singleStatus of projectStatuses; let i = index"
+              [id]="i"
+              [value]="singleStatus"
+            >
+              {{ singleStatus }}
+            </option>
+          </select>
+        </div>
+        <button
+          [disabled]="!projectForm.valid"
+          class="btn btn-primary"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
       <!--
           Create a Form with the following Controls and Validators
           1) Project Name (should not be empty)
