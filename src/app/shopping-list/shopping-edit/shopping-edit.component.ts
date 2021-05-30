@@ -44,6 +44,14 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       this.shoppingListService.addIngredient(newIngredient);
     }
     this.editMode = false;
+    form.reset();
+  }
+
+  /**
+   * This is more like a cancel. Maybe the instructor has bigger plans for this so I'll just keep it as onClear. It doesn't make sense to me though
+   */
+  onClear() {
     this.shoppingListForm.reset();
+    this.editMode = false;
   }
 }
