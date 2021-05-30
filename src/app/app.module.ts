@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -31,7 +31,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     RecipeStartComponent,
     RecipeEditComponent,
   ],
-  imports: [BrowserModule, FormsModule, NgbModule, AppRoutingModule],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgbModule, AppRoutingModule],
   providers: [ShoppingListService],
   // Which component should be aware of at the app startup
   bootstrap: [AppComponent],
