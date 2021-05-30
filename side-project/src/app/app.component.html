@@ -1,88 +1,19 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <!-- signup form is from component.ts -->
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="userData">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              class="form-control"
-              formControlName="username"
-            />
-            <span
-              *ngIf="
-                !signupForm.get('userData.username').valid &&
-                signupForm.get('userData.username').touched
-              "
-              class="help-block"
-            >
-              <span
-                *ngIf="
-                  signupForm.get('userData.username').errors['nameIsForbidden']
-                "
-                >Haha your name is forbidden!</span
-              >
-              <span
-                *ngIf="signupForm.get('userData.username').errors['required']"
-                >This field is required</span
-              >
-            </span>
-          </div>
-          <div class="form-group">
-            <label for="email">email</label>
-            <input
-              type="text"
-              id="email"
-              class="form-control"
-              formControlName="email"
-            />
-            <span
-              *ngIf="
-                !signupForm.get('userData.email').valid &&
-                signupForm.get('userData.email').touched
-              "
-              class="help-block"
-            >
-              <span
-                *ngIf="
-                signupForm.get('userData.email').errors && signupForm.get('userData.email').errors['emailIsForbidden']
-                "
-                >Haha your email is forbidden!</span
-              >
-              <span *ngIf="signupForm.get('userData.email').errors && signupForm.get('userData.email').errors['required']"
-                >This field is required</span
-              >
-            </span>
-          </div>
-        </div>
+      <!--
+          Create a Form with the following Controls and Validators
+          1) Project Name (should not be empty)
+          2) Mail (should not be a empty and a valid email)
+          3) Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
+          4) Submit Button
 
-        <div formArrayName="hobbies">
-          <h4>Your hobbies</h4>
-          <button class="btn-default" type="button" (click)="onAddHobby()">
-            Add hobby
-          </button>
-          <div
-            class="form-group"
-            *ngFor="let hobbyControl of getControls(); let i = index"
-          >
-            <input type="text" class="form-group" [formControlName]="i" />
-          </div>
-        </div>
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input type="radio" [value]="gender" formControlName="gender" />{{
-              gender
-            }}
-          </label>
-        </div>
-        <span *ngIf="!signupForm.valid && signupForm.touched"
-          >Please enter valid data!</span
-        >
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </form>
+          Add your own Validator which doesn't allow "Test" as a Project Name
+
+          Also implement that Validator as an async Validator (replace the other one)
+
+          Upon submitting the form, simply print the value to the console
+      -->
     </div>
   </div>
 </div>
