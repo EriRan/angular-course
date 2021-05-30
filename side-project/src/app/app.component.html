@@ -53,11 +53,8 @@
         </div>
         <div class="form-group">
           <label for="projectStatus">Project Status</label>
-          <select
-            class="form-control"
-            (change)="changeStatus($event)"
-          >
-          <option value="">Please choose a status</option>
+          <select class="form-control" (change)="changeStatus($event)">
+            <option value="">Please choose a status</option>
             <option
               *ngFor="let singleStatus of projectStatuses; let i = index"
               [id]="i"
