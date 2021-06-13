@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {map} from "rxjs/operators";
+import { Post } from "./post.model";
 
 @Component({
   selector: "app-root",
@@ -16,11 +17,12 @@ export class AppComponent implements OnInit {
     this.fetchPosts();
   }
 
-  onCreatePost(postData: { title: string; content: string }) {
+  onCreatePost(postData: Post) {
     // Send Http request
     //posts.json is a Firebase requirement
+    //The angle bracket content defines what comes as a response
     this.http
-      .post(
+      .post<{name: string}>(
         "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
         postData
       )
@@ -42,11 +44,11 @@ export class AppComponent implements OnInit {
   private fetchPosts() {
     //Gets have no request body
     return this.http
-      .get(
+      .get<{ [key: string]: Post}>(
         "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json"
       )
-      .pipe(map(response => {
-        const postsArray = [];
+      .pipe(map((response: {[key: string]: Post}) => {
+        const postsArray: Array<Post> = [];
         for(const key in response) {
           if (response.hasOwnProperty(key)) {
             postsArray.push({...response[key], id: key});
