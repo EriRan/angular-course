@@ -22,7 +22,11 @@ export class AppComponent implements OnInit {
   }
 
   onCreatePost(postData: Post) {
-    this.postsService.createAndStorePost(postData.title, postData.content);
+    this.postsService.createAndStorePost(postData.title, postData.content)
+    .subscribe(() => {
+      //Refresh posts from API
+      this.onFetchPosts();
+    });
   }
 
   onFetchPosts() {

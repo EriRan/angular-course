@@ -15,15 +15,11 @@ export class PostsService {
     // Send Http request
     //posts.json is a Firebase requirement
     //The angle bracket content defines what comes as a response
-    this.http
+    return this.http
       .post<{ name: string }>(
         "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
         postData
-      )
-      .subscribe((response) => {
-        //No request is sent without subscribe!
-        console.log(response);
-      });
+      );
   }
 
   fetchPosts() {
