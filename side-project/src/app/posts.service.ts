@@ -32,9 +32,7 @@ export class PostsService {
         }
       )
       .subscribe(
-        (responseData) => {
-          
-        },
+        (responseData) => {},
         (error: HttpErrorResponse) => {
           this.error.next(error.message);
         }
@@ -72,22 +70,26 @@ export class PostsService {
 
   deletePosts() {
     //This seemed to return just an observable with null content
-    return this.http.delete(
-      "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
-      {
-        observe: "events"
-      }
-    ).pipe(
-      tap(event => {
-        //For some special kind of APIs?
-        if (event.type === HttpEventType.Response) {
-          console.log(event.body);
+    return this.http
+      .delete(
+        "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
+        {
+          observe: "events",
+          //Can be blob for a file
+          responseType: "text",
         }
-        if (event.type === HttpEventType.Sent) {
-          console.log(event.type);
-        }
-        return console.log(event);
-      })
-    );
+      )
+      .pipe(
+        tap((event) => {
+          //For some special kind of APIs?
+          if (event.type === HttpEventType.Response) {
+            console.log(event.body);
+          }
+          if (event.type === HttpEventType.Sent) {
+            console.log(event.type);
+          }
+          console.log(event);
+        })
+      );
   }
 }
