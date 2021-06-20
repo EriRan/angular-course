@@ -1,7 +1,13 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEventType,
+  HttpHeaders,
+  HttpParams,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, tap } from "rxjs/operators";
 import { Post } from "./post.model";
 
 @Injectable()
@@ -20,10 +26,15 @@ export class PostsService {
     return this.http
       .post<{ name: string }>(
         "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
-        postData
+        postData,
+        {
+          observe: "response",
+        }
       )
       .subscribe(
-        () => {this.fetchPosts();},
+        (responseData) => {
+          
+        },
         (error: HttpErrorResponse) => {
           this.error.next(error.message);
         }
@@ -38,8 +49,8 @@ export class PostsService {
       .get<{ [key: string]: Post }>(
         "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
         {
-          headers: new HttpHeaders({"Custom-Header" : "Hello"}),
-          params: searchParams
+          headers: new HttpHeaders({ "Custom-Header": "Hello" }),
+          params: searchParams,
         }
       )
       .pipe(
@@ -52,7 +63,7 @@ export class PostsService {
           }
           return postsArray;
         }),
-        catchError(errorResponse => {
+        catchError((errorResponse) => {
           //Could log the error here in some kind of analytics system
           return throwError(errorResponse);
         })
@@ -62,7 +73,21 @@ export class PostsService {
   deletePosts() {
     //This seemed to return just an observable with null content
     return this.http.delete(
-      "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json"
+      "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
+      {
+        observe: "events"
+      }
+    ).pipe(
+      tap(event => {
+        //For some special kind of APIs?
+        if (event.type === HttpEventType.Response) {
+          console.log(event.body);
+        }
+        if (event.type === HttpEventType.Sent) {
+          console.log(event.type);
+        }
+        return console.log(event);
+      })
     );
   }
 }
