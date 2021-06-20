@@ -1,10 +1,12 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Post } from "./post.model";
 
 @Injectable()
 export class PostsService {
+  error = new Subject<string>();
   constructor(private http: HttpClient) {}
 
   createAndStorePost(title: string, content: string) {
@@ -19,6 +21,12 @@ export class PostsService {
       .post<{ name: string }>(
         "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json",
         postData
+      )
+      .subscribe(
+        () => {this.fetchPosts();},
+        (error: HttpErrorResponse) => {
+          this.error.next(error.message);
+        }
       );
   }
 
@@ -42,6 +50,8 @@ export class PostsService {
 
   deletePosts() {
     //This seemed to return just an observable with null content
-    return this.http.delete("https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json");
+    return this.http.delete(
+      "https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json"
+    );
   }
 }
