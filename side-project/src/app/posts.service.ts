@@ -43,4 +43,9 @@ export class PostsService {
         })
       );
   }
+
+  deletePosts() {
+    //This seemed to return just an observable with null content
+    return this.http.delete("https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/posts.json");
+  }
 }
