@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RecipeService } from '../recipes/recipe.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Recipe } from '../recipes/recipe.model';
 
 //This doesn't have to be added to app.module this way
@@ -38,10 +38,10 @@ export class DataStorageService {
               ingredients: recipe.ingredients ? recipe.ingredients : [],
             };
           });
+        }),
+        tap(recipes => {
+          this.recipesService.setRecipes(recipes);
         })
       )
-      .subscribe((recipes) => {
-        this.recipesService.setRecipes(recipes);
-      });
   }
 }
