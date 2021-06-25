@@ -15,20 +15,7 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
 
-  private recipes: Array<Recipe> = [
-    new Recipe(
-      'Cool Bread',
-      'Really cool',
-      'https://en.wikipedia.org/wiki/Sourdough#/media/File:Home_made_sour_dough_bread.jpg',
-      [new Ingredient('Flour', 34), new Ingredient('Salt', 6)]
-    ),
-    new Recipe(
-      'Mango Lassi',
-      'Sweet like honey',
-      'https://en.wikipedia.org/wiki/Sourdough#/media/File:Home_made_sour_dough_bread.jpg',
-      [new Ingredient('Mango', 2)]
-    ),
-  ];
+  private recipes: Array<Recipe> = [];
 
   getRecipe(index: number) {
     return this.recipes.slice()[index];
