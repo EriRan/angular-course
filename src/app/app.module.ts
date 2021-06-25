@@ -17,11 +17,13 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { RecipeService } from './recipes/recipe.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthComponent } from './auth/auth.component';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
 @NgModule({
   declarations: [
+    AuthComponent,
     AppComponent,
     HeaderComponent,
     RecipesComponent,
@@ -39,7 +41,7 @@ import { BrowserModule } from '@angular/platform-browser';
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [ShoppingListService, RecipeService],
   // Which component should be aware of at the app startup
