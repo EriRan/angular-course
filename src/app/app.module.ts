@@ -18,6 +18,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthComponent } from './auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -34,6 +35,7 @@ import { AuthComponent } from './auth/auth.component';
     ShoppingEditComponent,
     RecipeStartComponent,
     RecipeEditComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     NgbModule,
