@@ -28,30 +28,22 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
-    return this.authService.user.pipe(
-      //Immediately access the user value and then unsubscribe!
-      //This is good information!!!
-      take(1),
-      //Take the user observable and transform it into recipes observable
-      exhaustMap((user) => {
-        return this.http.get<Recipe[]>(
-          'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
-          {
-            params: new HttpParams().set('auth', user!.token!)
-          }
-        );
-      }),
-      map((recipes) => {
-        return recipes.map((recipe) => {
-          return {
-            ...recipe,
-            ingredients: recipe.ingredients ? recipe.ingredients : [],
-          };
-        });
-      }),
-      tap((recipes) => {
-        this.recipesService.setRecipes(recipes);
-      })
-    );
+    return this.http
+      .get<Recipe[]>(
+        'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
+      )
+      .pipe(
+        map((recipes) => {
+          return recipes.map((recipe) => {
+            return {
+              ...recipe,
+              ingredients: recipe.ingredients ? recipe.ingredients : [],
+            };
+          });
+        }),
+        tap((recipes) => {
+          this.recipesService.setRecipes(recipes);
+        })
+      );
   }
 }
