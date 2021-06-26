@@ -29,7 +29,10 @@ export class AuthService {
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDxCjtBUZUEHOIaiJ_DiC5G75vDEjw6rF8',
         { email: email, password: password, returnSecureToken: true }
       )
-      .pipe(catchError((errorResponse) => this.handleError(errorResponse)));
+      .pipe(
+        catchError((errorResponse) => this.handleError(errorResponse)),
+        tap((responseData) => this.handleAuthentication(responseData))
+      );
   }
 
   private handleAuthentication(responseData: AuthBaseResponseData) {
