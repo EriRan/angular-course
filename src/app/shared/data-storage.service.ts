@@ -33,7 +33,6 @@ export class DataStorageService {
       //This is good information!!!
       take(1),
       //Take the user observable and transform it into recipes observable
-      //Does this really have to be exhaustMap?
       exhaustMap((user) => {
         return this.http.get<Recipe[]>(
           'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
