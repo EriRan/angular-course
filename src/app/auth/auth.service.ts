@@ -4,13 +4,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { AuthBaseResponseData, AuthLoginResponseData } from './auth.types';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
   
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string): Observable<AuthBaseResponseData> {
     return this.http
@@ -34,6 +35,11 @@ export class AuthService {
         catchError((errorResponse) => this.handleError(errorResponse)),
         tap((responseData) => this.handleAuthentication(responseData))
       );
+  }
+
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth']);
   }
 
   private handleAuthentication(responseData: AuthBaseResponseData) {
