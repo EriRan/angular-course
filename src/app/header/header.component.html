@@ -20,8 +20,8 @@
       <li routerLinkActive="active" class="nav-item">
         <a routerLink="/shopping-list" class="nav-link">Shopping List</a>
       </li>
-      <li><a style="cursor: pointer;" *ngIf="isAuthenticated">Logout</a></li>
-      <li class="dropdown" *ngIf="isAuthenticated">
+      <li><a style="cursor: pointer;" class="nav-link" *ngIf="isAuthenticated">Logout</a></li>
+      <li class="nav-link dropdown" *ngIf="isAuthenticated">
         <div ngbDropdown class="d-inline-block">
           <button
             class="btn btn-outline-primary"
