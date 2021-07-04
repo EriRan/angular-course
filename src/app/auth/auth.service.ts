@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { AuthBaseResponseData, AuthLoginResponseData } from './auth.types';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { USER_DATA_LOCAL_STORAGE_KEY } from './auth.constant';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -38,7 +39,7 @@ export class AuthService {
   }
 
   autologin() {
-    const localStorageUser = localStorage.getItem('userData');
+    const localStorageUser = localStorage.getItem(USER_DATA_LOCAL_STORAGE_KEY);
     if (!localStorage) {
       return;
     }
@@ -71,7 +72,7 @@ export class AuthService {
     );
     this.user.next(user);
     //Serialize javascript object into a json string
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem(USER_DATA_LOCAL_STORAGE_KEY, JSON.stringify(user));
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
