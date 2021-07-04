@@ -10,7 +10,7 @@ import { USER_DATA_LOCAL_STORAGE_KEY } from './auth.constant';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
-  
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -43,26 +43,50 @@ export class AuthService {
     if (!localStorage) {
       return;
     }
-    const parsedUser: {email: string, id: string, _token: string, _tokenExpiration: string} = JSON.parse(localStorageUser!);
+    const parsedUser: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorageUser!);
+    if (!parsedUser) {
+      return;
+    }
     const userObject: User = new User(
       parsedUser.email,
       parsedUser.id,
       parsedUser._token,
-      new Date(parsedUser._tokenExpiration)
-    )
+      new Date(parsedUser._tokenExpirationDate)
+    );
     if (userObject.token) {
       this.user.next(userObject);
+      const expirationDuration =
+        new Date(parsedUser._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogout(expirationDuration);
     }
   }
 
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
+    localStorage.removeItem(USER_DATA_LOCAL_STORAGE_KEY);
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   private handleAuthentication(responseData: AuthBaseResponseData) {
+    const expiresInMilliseconds = +responseData.expiresIn * 1000;
     const expirationDate = new Date(
-      new Date().getTime() + +responseData.expiresIn * 1000
+      new Date().getTime() + expiresInMilliseconds
     );
     const user = new User(
       responseData.email,
@@ -71,6 +95,7 @@ export class AuthService {
       expirationDate
     );
     this.user.next(user);
+    this.autoLogout(expiresInMilliseconds);
     //Serialize javascript object into a json string
     localStorage.setItem(USER_DATA_LOCAL_STORAGE_KEY, JSON.stringify(user));
   }
