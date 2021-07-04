@@ -20,6 +20,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -36,7 +37,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.component';
     ShoppingEditComponent,
     RecipeStartComponent,
     RecipeEditComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     NgbModule,
