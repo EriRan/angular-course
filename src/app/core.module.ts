@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { AuthInterceptorService } from "side-project/src/app/auth-interceptor.service";
+import { AuthInterceptorService } from "./auth/auth-interceptor.component";
 import { RecipeService } from "./recipes/recipe.service";
 import { ShoppingListService } from "./shopping-list/shopping-list.service";
 
