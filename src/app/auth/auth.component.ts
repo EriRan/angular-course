@@ -1,4 +1,9 @@
-import { Component, ComponentFactoryResolver, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -8,10 +13,11 @@ import { AuthService } from './auth.service';
 import { AuthBaseResponseData } from './auth.types';
 
 @Component({ selector: 'app-auth', templateUrl: './auth.component.html' })
-export class AuthComponent implements OnDestroy{
+export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string | null = null;
+
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost!: PlaceholderDirective;
 
@@ -73,14 +79,16 @@ export class AuthComponent implements OnDestroy{
     //Just pass the time to the factory resolver and it will return a factory for it
     const alertComponentFactory =
       this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
-      const hostViewContainerRef = this.alertHost.viewContainerRef;
-      hostViewContainerRef.clear();
-      const componentRef = hostViewContainerRef.createComponent(alertComponentFactory);
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    const componentRef = hostViewContainerRef.createComponent(
+      alertComponentFactory
+    );
 
-      componentRef.instance.message = message;
-      this.closeSubscription = componentRef.instance.close.subscribe(() => {
-        this.closeSubscription!.unsubscribe();
-        hostViewContainerRef.clear();
-      });
+    componentRef.instance.message = message;
+    this.closeSubscription = componentRef.instance.close.subscribe(() => {
+      this.closeSubscription!.unsubscribe();
+      hostViewContainerRef.clear();
+    });
   }
 }
