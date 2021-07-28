@@ -7,10 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
-import { AuthModule } from './auth/auth.module';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -22,10 +20,8 @@ import { AuthModule } from './auth/auth.module';
     ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
-    ShoppingListModule,
     SharedModule,
     CoreModule,
-    AuthModule,
   ],
   // Which component should be aware of at the app startup
   bootstrap: [AppComponent],
