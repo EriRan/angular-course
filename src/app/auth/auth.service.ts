@@ -6,6 +6,7 @@ import { AuthBaseResponseData, AuthLoginResponseData } from './auth.types';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { USER_DATA_LOCAL_STORAGE_KEY } from './auth.constant';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
   signup(email: string, password: string): Observable<AuthBaseResponseData> {
     return this.http
       .post<AuthBaseResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDxCjtBUZUEHOIaiJ_DiC5G75vDEjw6rF8',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseApiKey,
         { email: email, password: password, returnSecureToken: true }
       )
       .pipe(
@@ -29,7 +30,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthLoginResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDxCjtBUZUEHOIaiJ_DiC5G75vDEjw6rF8',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseApiKey,
         { email: email, password: password, returnSecureToken: true }
       )
       .pipe(
