@@ -3,13 +3,13 @@ import { Ingredient } from '../../shared/ingredient.model';
 import { addIngredient } from './shopping-list.actions';
 
 const initialState = {
-  ingredients: [new Ingredient('Ginger', 123), new Ingredient('Tomato', 321)],
+  ingredients: [new Ingredient('Coca Cola', 123), new Ingredient('Eggplant', 321)],
 };
 
 export const shoppingListReducer = createReducer(
   initialState,
-  on(addIngredient, (state, {Ingredient}) => ({
+  on(addIngredient, (state, {ingredient}) => ({
     ...state,
-    Ingredient
+    ingredients: [...state.ingredients, ingredient]
   }))
 );
