@@ -1,6 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { Ingredient } from '../../shared/ingredient.model';
-import { addIngredient, addIngredients, deleteIngredient, updateIngredient } from './shopping-list.actions';
+import {
+  addIngredient,
+  addIngredients,
+  deleteIngredient,
+  startEdit,
+  stopEdit,
+  updateIngredient,
+} from './shopping-list.actions';
 
 export interface AppState {
   shoppingList: State;
@@ -13,27 +20,48 @@ export interface State {
 }
 
 const initialState: State = {
-  ingredients: [new Ingredient('Coca Cola', 123), new Ingredient('Eggplant', 321)],
+  ingredients: [
+    new Ingredient('Coca Cola', 123),
+    new Ingredient('Eggplant', 321),
+  ],
   editedIngredient: null,
-  editenIngredientIndex: -1
+  editenIngredientIndex: -1,
 };
 
 export const shoppingListReducer = createReducer(
   initialState,
-  on(addIngredient, (state, {ingredient}) => ({
+  on(addIngredient, (state, { ingredient }) => ({
     ...state,
-    ingredients: [...state.ingredients, ingredient]
+    ingredients: [...state.ingredients, ingredient],
   })),
-  on(addIngredients, (state, {ingredients}) => ({
+  on(addIngredients, (state, { ingredients }) => ({
     ...state,
-    ingredients: [...state.ingredients, ...ingredients] // Spread arrays into one array
+    ingredients: [...state.ingredients, ...ingredients], // Spread arrays into one array
   })),
-  on(updateIngredient, (state, {index, ingredient}) => ({
+  on(updateIngredient, (state, {ingredient}) => ({
     ...state,
-    ingredients: state.ingredients.map((existingIngredient, i) => i === index ? ingredient : existingIngredient)
+    ingredients: state.ingredients.map((existingIngredient, i) =>
+      i === state.editenIngredientIndex
+        ? ingredient
+        : existingIngredient
+    ),
+    editedIngredient: null,
+    editenIngredientIndex: -1,
   })),
-  on(deleteIngredient, (state, {index}) => ({
+  on(deleteIngredient, (state) => ({
     ...state,
-    ingredients: state.ingredients.filter((existingIngredient, i) => i !== index)
+    ingredients: state.ingredients.filter(
+      (existingIngredient, i) => i !== state.editenIngredientIndex
+    ),
+  })),
+  on(startEdit, (state, { index }) => ({
+    ...state,
+    editedIngredient: { ...state.ingredients[index] },
+    editenIngredientIndex: index,
+  })),
+  on(stopEdit, (state) => ({
+    ...state,
+    editedIngredient: null,
+    editenIngredientIndex: -1,
   }))
 );
