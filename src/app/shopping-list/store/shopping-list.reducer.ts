@@ -51,7 +51,7 @@ export const shoppingListReducer = createReducer(
   on(deleteIngredient, (state) => ({
     ...state,
     ingredients: state.ingredients.filter(
-      (existingIngredient, i) => i !== state.editenIngredientIndex
+      (_existingIngredient, i) => i !== state.editenIngredientIndex
     ),
   })),
   on(startEdit, (state, { index }) => ({
