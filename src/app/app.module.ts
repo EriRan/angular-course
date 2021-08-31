@@ -10,7 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 import { StoreModule } from '@ngrx/store';
-import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
+import { appReducer } from './store/app.reducer';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -24,9 +24,7 @@ import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer
     HttpClientModule,
     SharedModule,
     CoreModule,
-    StoreModule.forRoot({
-      shoppingList: shoppingListReducer
-    })
+    StoreModule.forRoot(appReducer)
   ],
   // Which component should be aware of at the app startup
   bootstrap: [AppComponent],

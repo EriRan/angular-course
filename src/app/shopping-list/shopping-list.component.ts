@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'node_modules/rxjs';
+import { AppState } from '../store/app.reducer';
 import { startEdit } from './store/shopping-list.actions';
-import { AppState, State } from './store/shopping-list.reducer';
+import { State } from './store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-list',

@@ -1,8 +1,8 @@
-import { state } from '@angular/animations';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'side-project/node_modules/rxjs';
+import { AppState } from 'src/app/store/app.reducer';
 import { Ingredient } from '../../shared/ingredient.model';
 import {
   addIngredient,
@@ -10,7 +10,6 @@ import {
   stopEdit,
   updateIngredient,
 } from '../store/shopping-list.actions';
-import { AppState } from '../store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-edit',
