@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataStorageService: DataStorageService,
+    private authService: AuthService,
     private store: Store<AppState>
   ) {}
 
@@ -54,5 +55,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   onLogout() {
     this.store.dispatch(logout());
+    this.authService.logout();
   }
 }
