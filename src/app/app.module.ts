@@ -11,6 +11,8 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -24,7 +26,8 @@ import { appReducer } from './store/app.reducer';
     HttpClientModule,
     SharedModule,
     CoreModule,
-    StoreModule.forRoot(appReducer)
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([AuthEffects]),
   ],
   // Which component should be aware of at the app startup
   bootstrap: [AppComponent],

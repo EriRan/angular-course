@@ -2,18 +2,22 @@ import {
   Component,
   ComponentFactoryResolver,
   OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
+import { AppState } from '../store/app.reducer';
 import { AuthService } from './auth.service';
 import { AuthBaseResponseData } from './auth.types';
+import { loginStart } from './store/auth.actions';
 
 @Component({ selector: 'app-auth', templateUrl: './auth.component.html' })
-export class AuthComponent implements OnDestroy {
+export class AuthComponent implements OnDestroy, OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string | null = null;
@@ -26,7 +30,8 @@ export class AuthComponent implements OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private store: Store<AppState>
   ) {}
 
   onSwitchMode() {
@@ -44,23 +49,10 @@ export class AuthComponent implements OnDestroy {
 
     this.isLoading = true;
     if (this.isLoginMode) {
-      authObservable = this.authService.login(email, password);
+      this.store.dispatch(loginStart({ email: email, password: password }));
     } else {
       authObservable = this.authService.signup(email, password);
     }
-
-    authObservable.subscribe(
-      (response) => {
-        this.isLoading = false;
-        this.router.navigate(['/recipes']);
-      },
-      (errorMessage) => {
-        console.log(errorMessage);
-        this.error = errorMessage;
-        this.showErrorAlert(errorMessage);
-        this.isLoading = false;
-      }
-    );
 
     form.reset();
   }
@@ -69,6 +61,16 @@ export class AuthComponent implements OnDestroy {
     if (this.closeSubscription) {
       this.closeSubscription.unsubscribe();
     }
+  }
+
+  ngOnInit(): void {
+    this.store.select('auth').subscribe((authState) => {
+      this.isLoading = authState.loading;
+      this.error = authState.authenticationError;
+      if (this.error) {
+        this.showErrorAlert(this.error);
+      }
+    });
   }
 
   onHandleError() {
