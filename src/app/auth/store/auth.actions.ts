@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 
-export const ON_SIGNUP = 'ON_SIGNUP';
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+export const ON_SIGNUP = '[Authentication] On signup';
+export const LOGIN = '[Authentication] Login';
+export const LOGOUT = '[Authentication] Logout';
 
 export const onSignup = createAction(
   ON_SIGNUP,
