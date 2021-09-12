@@ -7,6 +7,7 @@ import { of } from 'side-project/node_modules/rxjs';
 import { switchMap } from 'side-project/node_modules/rxjs/internal/operators/switchMap';
 import { environment } from 'src/environments/environment';
 import { USER_DATA_LOCAL_STORAGE_KEY } from '../auth.constant';
+import { AuthService } from '../auth.service';
 import { AuthBaseResponseData } from '../auth.types';
 import { User } from '../user.model';
 import {
@@ -88,6 +89,9 @@ export class AuthEffects {
             }
           )
           .pipe(
+            tap((responseData) => {
+              this.authService.setLogoutTimer(+responseData.expiresIn * 1000);
+            }),
             map((responseData) => {
               return handleAuthentication(responseData);
             }),
@@ -102,7 +106,7 @@ export class AuthEffects {
   authRedirect = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(authenticateSuccess, logout),
+        ofType(authenticateSuccess),
         tap(() => {
           this.router.navigate(['/']);
         })
@@ -127,6 +131,9 @@ export class AuthEffects {
             }
           )
           .pipe(
+            tap((responseData) => {
+              this.authService.setLogoutTimer(+responseData.expiresIn * 1000);
+            }),
             map((responseData) => {
               return handleAuthentication(responseData);
             }),
@@ -144,7 +151,9 @@ export class AuthEffects {
         // Can also add multiple different actions in ofType
         ofType(logout),
         tap(() => {
+          this.authService.clearLogoutTimer();
           localStorage.removeItem(USER_DATA_LOCAL_STORAGE_KEY);
+          this.router.navigate(['/auth']);
         })
       );
     },
@@ -159,7 +168,7 @@ export class AuthEffects {
           USER_DATA_LOCAL_STORAGE_KEY
         );
         if (!localStorage) {
-          return { type: "DUMMY"};
+          return { type: 'DUMMY' };
         }
         const parsedUser: {
           email: string;
@@ -168,7 +177,7 @@ export class AuthEffects {
           _tokenExpirationDate: string;
         } = JSON.parse(localStorageUser!);
         if (!parsedUser) {
-          return { type: "DUMMY"};
+          return { type: 'DUMMY' };
         }
         const userObject: User = new User(
           parsedUser.email,
@@ -177,23 +186,20 @@ export class AuthEffects {
           new Date(parsedUser._tokenExpirationDate)
         );
         if (userObject.token) {
-          return (
-            authenticateSuccess({
-              email: userObject.email,
-              userId: userObject.id,
-              token: userObject.id,
-              expirationDate: new Date(parsedUser._tokenExpirationDate),
-            })
-          );
-          /*
           const expirationDuration =
             new Date(parsedUser._tokenExpirationDate).getTime() -
             new Date().getTime();
-          this.autoLogout(expirationDuration);
-          */
+
+          this.authService.setLogoutTimer(expirationDuration);
+          return authenticateSuccess({
+            email: userObject.email,
+            userId: userObject.id,
+            token: userObject.id,
+            expirationDate: new Date(parsedUser._tokenExpirationDate),
+          });
         }
         //WTF
-        return { type: "DUMMY"};
+        return { type: 'DUMMY' };
       })
     );
   });
@@ -204,6 +210,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 }
