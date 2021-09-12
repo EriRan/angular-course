@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/store/auth.effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 // Some kind of definition file for the component?
 // NgModule here is also a decorator
@@ -28,6 +29,7 @@ import { AuthEffects } from './auth/store/auth.effects';
     CoreModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   // Which component should be aware of at the app startup
   bootstrap: [AppComponent],
