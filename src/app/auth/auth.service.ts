@@ -9,7 +9,7 @@ import { USER_DATA_LOCAL_STORAGE_KEY } from './auth.constant';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
-import { login, logout } from './store/auth.actions';
+import { authenticateSuccess, logout } from './store/auth.actions';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -70,7 +70,7 @@ export class AuthService {
     );
     if (userObject.token) {
       this.store.dispatch(
-        login({
+        authenticateSuccess({
           email: userObject.email,
           userId: userObject.id,
           token: userObject.id,
@@ -112,7 +112,7 @@ export class AuthService {
       expirationDate
     );
     this.store.dispatch(
-      login({
+      authenticateSuccess({
         email: responseData.email,
         userId: responseData.localId,
         token: responseData.idToken,
