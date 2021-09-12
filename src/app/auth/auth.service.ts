@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { User } from './user.model';
-import { USER_DATA_LOCAL_STORAGE_KEY } from './auth.constant';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
-import { authenticateSuccess, logout } from './store/auth.actions';
+import { logout } from './store/auth.actions';
 
+/**
+ * Used to just manage token expiration
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private tokenExpirationTimer?: any | null;
