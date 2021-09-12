@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 export const AUTHENTICATE_SUCCESS = '[Authentication] Authenticate Success';
 export const AUTHENTICATE_FAIL = '[Authentication] Authenticate Fail';
+export const CLEAR_ERROR = '[Authentication] Clear Error';
 
 export const LOGIN_START = '[Authentication] Login Start';
 
@@ -31,6 +32,8 @@ export const authenticateSuccess = createAction(
     expirationDate: Date;
   }>()
 );
+
+export const clearError = createAction(CLEAR_ERROR);
 
 export const logout = createAction(LOGOUT);
 

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AppState } from '../store/app.reducer';
-import { loginStart, signupStart } from './store/auth.actions';
+import { clearError, loginStart, signupStart } from './store/auth.actions';
 
 @Component({ selector: 'app-auth', templateUrl: './auth.component.html' })
 export class AuthComponent implements OnDestroy, OnInit {
@@ -23,6 +23,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   alertHost!: PlaceholderDirective;
 
   private closeSubscription?: Subscription;
+  private storeSubscription?: Subscription;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -53,10 +54,13 @@ export class AuthComponent implements OnDestroy, OnInit {
     if (this.closeSubscription) {
       this.closeSubscription.unsubscribe();
     }
+    if (this.storeSubscription) {
+      this.storeSubscription.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
-    this.store.select('auth').subscribe((authState) => {
+    this.storeSubscription = this.store.select('auth').subscribe((authState) => {
       this.isLoading = authState.loading;
       this.error = authState.authenticationError;
       if (this.error) {
@@ -66,7 +70,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   }
 
   onHandleError() {
-    this.error = null;
+    this.store.dispatch(clearError());
   }
 
   private showErrorAlert(message: string) {
