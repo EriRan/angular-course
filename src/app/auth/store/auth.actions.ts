@@ -5,6 +5,7 @@ export const AUTHENTICATE_FAIL = '[Authentication] Authenticate Fail';
 export const CLEAR_ERROR = '[Authentication] Clear Error';
 
 export const LOGIN_START = '[Authentication] Login Start';
+export const AUTO_LOGIN = '[Authentication] Auto Login';
 
 export const SIGNUP_START = '[Authentication] Signup Start';
 
@@ -22,6 +23,8 @@ export const loginStart = createAction(
     password: string;
   }>()
 );
+
+export const autoLogin = createAction(AUTO_LOGIN);
 
 export const authenticateSuccess = createAction(
   AUTHENTICATE_SUCCESS,

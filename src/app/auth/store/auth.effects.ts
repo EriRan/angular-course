@@ -6,17 +6,28 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'side-project/node_modules/rxjs';
 import { switchMap } from 'side-project/node_modules/rxjs/internal/operators/switchMap';
 import { environment } from 'src/environments/environment';
+import { USER_DATA_LOCAL_STORAGE_KEY } from '../auth.constant';
 import { AuthBaseResponseData } from '../auth.types';
+import { User } from '../user.model';
 import {
   authenticateSuccess,
   authenticateFail,
   loginStart,
   signupStart,
+  logout,
+  autoLogin,
 } from './auth.actions';
 
 const handleAuthentication = (responseData: AuthBaseResponseData) => {
   const expiresInMilliseconds = +responseData.expiresIn * 1000;
   const expirationDate = new Date(new Date().getTime() + expiresInMilliseconds);
+  const user = new User(
+    responseData.email,
+    responseData.localId,
+    responseData.idToken,
+    expirationDate
+  );
+  localStorage.setItem(USER_DATA_LOCAL_STORAGE_KEY, JSON.stringify(user));
   return authenticateSuccess({
     email: responseData.email,
     userId: responseData.localId,
@@ -88,10 +99,10 @@ export class AuthEffects {
     );
   });
 
-  authSuccess$ = createEffect(
+  authRedirect = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(authenticateSuccess),
+        ofType(authenticateSuccess, logout),
         tap(() => {
           this.router.navigate(['/']);
         })
@@ -123,6 +134,66 @@ export class AuthEffects {
               return handleError(errorResponse);
             })
           );
+      })
+    );
+  });
+
+  authLogout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        // Can also add multiple different actions in ofType
+        ofType(logout),
+        tap(() => {
+          localStorage.removeItem(USER_DATA_LOCAL_STORAGE_KEY);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  autoLogin$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(autoLogin),
+      map(() => {
+        const localStorageUser = localStorage.getItem(
+          USER_DATA_LOCAL_STORAGE_KEY
+        );
+        if (!localStorage) {
+          return { type: "DUMMY"};
+        }
+        const parsedUser: {
+          email: string;
+          id: string;
+          _token: string;
+          _tokenExpirationDate: string;
+        } = JSON.parse(localStorageUser!);
+        if (!parsedUser) {
+          return { type: "DUMMY"};
+        }
+        const userObject: User = new User(
+          parsedUser.email,
+          parsedUser.id,
+          parsedUser._token,
+          new Date(parsedUser._tokenExpirationDate)
+        );
+        if (userObject.token) {
+          return (
+            authenticateSuccess({
+              email: userObject.email,
+              userId: userObject.id,
+              token: userObject.id,
+              expirationDate: new Date(parsedUser._tokenExpirationDate),
+            })
+          );
+          /*
+          const expirationDuration =
+            new Date(parsedUser._tokenExpirationDate).getTime() -
+            new Date().getTime();
+          this.autoLogout(expirationDuration);
+          */
+        }
+        //WTF
+        return { type: "DUMMY"};
       })
     );
   });

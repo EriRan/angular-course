@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { Store } from '@ngrx/store';
+import { autoLogin } from './auth/store/auth.actions';
+import { AppState } from './store/app.reducer';
 
 // Interesting! This is where some variables that are used in this component
 @Component({
@@ -9,12 +11,12 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
+  constructor(private store: Store<AppState>) {
 
   }
 
   ngOnInit(): void {
-    this.authService.autologin();
+    this.store.dispatch(autoLogin());
   }
 
 }
