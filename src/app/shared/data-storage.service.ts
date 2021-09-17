@@ -4,6 +4,9 @@ import { RecipeService } from '../recipes/recipe.service';
 import { exhaustMap, map, take, tap } from 'rxjs/operators';
 import { Recipe } from '../recipes/recipe.model';
 import { AuthService } from '../auth/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/app.reducer';
+import { setRecipes } from '../recipes/store/recipe.actions';
 
 //This doesn't have to be added to app.module this way
 @Injectable({ providedIn: 'root' })
@@ -11,7 +14,7 @@ export class DataStorageService {
   constructor(
     private http: HttpClient,
     private recipesService: RecipeService,
-    private authService: AuthService
+    private store: Store<AppState>
   ) {}
 
   storeRecipes() {
@@ -30,7 +33,7 @@ export class DataStorageService {
   fetchRecipes() {
     return this.http
       .get<Recipe[]>(
-        'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
+        'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json'
       )
       .pipe(
         map((recipes) => {
@@ -42,7 +45,7 @@ export class DataStorageService {
           });
         }),
         tap((recipes) => {
-          this.recipesService.setRecipes(recipes);
+          this.store.dispatch(setRecipes({ recipes: recipes }));
         })
       );
   }
