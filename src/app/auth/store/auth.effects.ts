@@ -166,7 +166,7 @@ export class AuthEffects {
         const localStorageUser = localStorage.getItem(
           USER_DATA_LOCAL_STORAGE_KEY
         );
-        if (!localStorage) {
+        if (!localStorageUser) {
           return { type: 'DUMMY' };
         }
         const parsedUser: {
@@ -193,7 +193,7 @@ export class AuthEffects {
           return authenticateSuccess({
             email: userObject.email,
             userId: userObject.id,
-            token: userObject.id,
+            token: userObject.token,
             expirationDate: new Date(parsedUser._tokenExpirationDate),
           });
         }
