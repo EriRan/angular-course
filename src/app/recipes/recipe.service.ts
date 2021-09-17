@@ -9,6 +9,7 @@ import { Recipe } from './recipe.model';
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
+  private recipes: Array<Recipe> = [];
 
   constructor(
     private store: Store<AppState>
@@ -18,8 +19,6 @@ export class RecipeService {
     this.recipes = recipes;
     this.recipesChanged.next(this.recipes.slice());
   }
-
-  private recipes: Array<Recipe> = [];
 
   getRecipe(index: number) {
     return this.recipes.slice()[index];

@@ -17,7 +17,7 @@ export class DataStorageService {
   ) {}
 
   storeRecipes() {
-    const recipes = this.recipesService.getRecipes();
+    let recipes = this.recipesService.getRecipes();
     //Put here so it replaces the current content
     return this.http
       .put(
@@ -31,11 +31,14 @@ export class DataStorageService {
 
   fetchRecipes() {
     return this.http
-      .get<Recipe[]>(
+      .get<Recipe[] | null>(
         'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json'
       )
       .pipe(
         map((recipes) => {
+          if (!recipes) {
+            return [];
+          }
           return recipes.map((recipe) => {
             return {
               ...recipe,
