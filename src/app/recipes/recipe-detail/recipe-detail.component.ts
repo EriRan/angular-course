@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'side-project/node_modules/rxjs/operators';
+import { addIngredients } from 'src/app/shopping-list/store/shopping-list.actions';
 import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
 import { deleteRecipe } from '../store/recipe.actions';
 
 @Component({
@@ -17,7 +17,6 @@ export class RecipeDetailComponent implements OnInit {
   id!: number;
 
   constructor(
-    private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AppState>
@@ -25,26 +24,30 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     //Haha oh wow
-    this.route.params.pipe(
-      map((params) => {
-        return +params['id'];
-      }),
-      switchMap((id) => {
-        this.id = id;
-        return this.store.select('recipe');
-      }),
-      map((recipesState) => {
-        return recipesState.recipes.find((recipe, index) => {
-          return index === this.id;
-        });
-      })
-    ).subscribe(recipe => {
-      this.recipe = recipe!;
-    })
+    this.route.params
+      .pipe(
+        map((params) => {
+          return +params['id'];
+        }),
+        switchMap((id) => {
+          this.id = id;
+          return this.store.select('recipe');
+        }),
+        map((recipesState) => {
+          return recipesState.recipes.find((recipe, index) => {
+            return index === this.id;
+          });
+        })
+      )
+      .subscribe((recipe) => {
+        this.recipe = recipe!;
+      });
   }
 
   onAddToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+    this.store.dispatch(
+      addIngredients({ ingredients: this.recipe.ingredients })
+    );
   }
 
   onEditRecipe() {
@@ -52,7 +55,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onDeleteRecipe() {
-    this.store.dispatch(deleteRecipe({index: this.id}));
+    this.store.dispatch(deleteRecipe({ index: this.id }));
     this.router.navigate(['/recipes']);
   }
 }
