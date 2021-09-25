@@ -8,10 +8,8 @@ import {
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from '../auth/auth.service';
 import { logout } from '../auth/store/auth.actions';
-import { fetchRecipes } from '../recipes/store/recipe.actions';
-import { DataStorageService } from '../shared/data-storage.service';
+import { fetchRecipes, storeRecipes } from '../recipes/store/recipe.actions';
 import { AppState } from '../store/app.reducer';
 
 @Component({
@@ -25,7 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output() featureSelected = new EventEmitter<string>();
 
   constructor(
-    private dataStorageService: DataStorageService,
     private store: Store<AppState>
   ) {}
 
@@ -43,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    this.dataStorageService.storeRecipes();
+    this.store.dispatch(storeRecipes());
   }
 
   onFetchData() {

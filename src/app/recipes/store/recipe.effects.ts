@@ -1,13 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';
-import { fetchRecipes, setRecipes } from './recipe.actions';
+import { fetchRecipes, setRecipes, storeRecipes } from './recipe.actions';
 
 @Injectable()
 export class RecipeEffects {
-  constructor(private actions$: Actions, private http: HttpClient) {}
+  constructor(
+    private actions$: Actions,
+    private http: HttpClient,
+    private store: Store<AppState>
+  ) {}
 
   fetchRecipes$ = createEffect(() => {
     return this.actions$.pipe(
@@ -34,4 +40,22 @@ export class RecipeEffects {
       })
     );
   });
+
+  storeRecipes$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        // Can also add multiple different actions in ofType
+        ofType(storeRecipes),
+        withLatestFrom(this.store.select('recipe')),
+        switchMap(([ignored, recipesState]) => {
+          return this.http
+            .put(
+              'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
+              recipesState.recipes
+            )
+        })
+      );
+    },
+    { dispatch: false }
+  );
 }

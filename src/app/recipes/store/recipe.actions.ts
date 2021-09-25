@@ -6,6 +6,7 @@ export const FETCH_RECIPES = '[Recipes] Fetch Recipes';
 export const ADD_RECIPE = '[Recipes] Add Recipe';
 export const UPDATE_RECIPE = '[Recipes] Update Recipe';
 export const DELETE_RECIPE = '[Recipes] Delete Recipe';
+export const STORE_RECIPES = '[Recipes] Store Recipes'
 
 export const setRecipes = createAction(
   SET_RECIPES,
@@ -34,6 +35,10 @@ export const deleteRecipe = createAction(
   props<{
     index: number;
   }>()
+);
+
+export const storeRecipes = createAction(
+  STORE_RECIPES
 );
 
 export const fetchRecipes = createAction(FETCH_RECIPES);
