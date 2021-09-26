@@ -1,5 +1,7 @@
 import {
   animate,
+  group,
+  keyframes,
   state,
   style,
   transition,
@@ -98,6 +100,62 @@ import { Component } from "@angular/core";
             transform: "translateX(100px)",
           })
         ),
+      ]),
+      ,
+    ]),
+    trigger("list2", [
+      state(
+        // in here is a dummy. It is never used
+        "in",
+        style({
+          opacity: 1,
+          transform: "translateX(0)",
+        })
+      ),
+      // void is a reserved state name where you have an element that wasn't added to the dom in the beginning
+      transition("void => *", [
+        animate(
+          1000,
+          keyframes([
+            style({
+              transform: "translateX(-100px)",
+              opacity: 0,
+              offset: 0,
+            }),
+            style({
+              transform: "translateX(-50px)",
+              opacity: 0.5,
+              offset: 0.3,
+            }),
+            style({
+              transform: "translateX(-20px)",
+              opacity: 1,
+              offset: 0.8,
+            }),
+            style({
+              transform: "translateX(0px)",
+              opacity: 1,
+              offset: 1,
+            }),
+          ])
+        ),
+      ]),
+      transition("* => void", [
+        group([
+          animate(
+            300,
+            style({
+              color: "red",
+            })
+          ),
+          animate(
+            800,
+            style({
+              opacity: 0,
+              transform: "translateX(100px)",
+            })
+          ),
+        ]),
       ]),
       ,
     ]),
