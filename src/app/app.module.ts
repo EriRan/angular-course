@@ -24,7 +24,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     NgbModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     SharedModule,
     CoreModule,

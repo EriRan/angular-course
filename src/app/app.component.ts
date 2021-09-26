@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { autoLogin } from './auth/store/auth.actions';
 import { AppState } from './store/app.reducer';
@@ -10,9 +11,17 @@ import { AppState } from './store/app.reducer';
   styleUrls: ['./app.component.css'], // This can also be just style if you want to add inline style. I think inline styles are gay
 })
 export class AppComponent implements OnInit {
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(autoLogin());
+    if (isPlatformBrowser(this.platformId)) {
+      this.store.dispatch(autoLogin());
+      console.log('On browser');
+    } else {
+      console.log('On Server');
+    }
   }
 }
