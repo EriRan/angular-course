@@ -1,71 +1,39 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm.value)">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input
-            type="text"
-            class="form-control"
-            id="title"
-            required
-            ngModel
-            name="title"
-          />
-        </div>
-        <div class="form-group">
-          <label for="content">Content</label>
-          <textarea
-            class="form-control"
-            id="content"
-            required
-            ngModel
-            name="content"
-          ></textarea>
-        </div>
-        <button
-          class="btn btn-primary"
-          type="submit"
-          [disabled]="!postForm.valid"
-        >
-          Send Post
-        </button>
-      </form>
+    <div class="col-xs-12">
+      <h1>Animations</h1>
+      <button class="btn btn-primary">Animate!</button>
+      <button class="btn btn-primary">Shrink!</button>
+      <hr>
+      <div></div>
     </div>
   </div>
-  <hr />
+  <hr>
   <div class="row">
-    <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <button class="btn btn-primary" (click)="onFetchPosts()">
-        Fetch Posts
-      </button>
-      |
-      <button
-        class="btn btn-danger"
-        [disabled]="loadedPosts.length < 1"
-        (click)="onClearPosts()"
-      >
-        Clear Posts
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <p *ngIf="loadedPosts && loadedPosts.length < 1 && !isFetching">
-        No posts available!
-      </p>
-      <ul *ngIf="loadedPosts.length > 0 && !isFetching" class="list-group">
-        <li class="list-group-item" *ngFor="let post of loadedPosts">
-          <h1>{{ post.title }}</h1>
-          <p>{{ post.content }}</p>
+    <div class="col-xs-12">
+      <input type="text" #input>
+      <button class="btn btn-primary" (click)="onAdd(input.value)">Add Item!</button>
+      <hr>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          (click)="onDelete(item)"
+          *ngFor="let item of list">
+          {{ item }}
         </li>
       </ul>
-      <p *ngIf="isFetching && !error">Loading...</p>
-      <div *ngIf="error" class="alert alert-danger">
-        <h1>An error has occurred</h1>
-        <p>{{ error }}</p>
-        <button class="btn btn-danger" (click)="onHandleError()">Okay</button>
-      </div>
     </div>
   </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          (click)="onDelete(item)"
+          *ngFor="let item of list">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
 </div>
