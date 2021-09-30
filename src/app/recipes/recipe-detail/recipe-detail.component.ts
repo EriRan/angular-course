@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, switchMap } from 'side-project/node_modules/rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { addIngredients } from 'src/app/shopping-list/store/shopping-list.actions';
 import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';

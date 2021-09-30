@@ -6,8 +6,8 @@ import {
 } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { of } from 'side-project/node_modules/rxjs';
-import { map, switchMap, take } from 'side-project/node_modules/rxjs/operators';
+import { of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AppState } from '../store/app.reducer';
 import { Recipe } from './recipe.model';
 import { fetchRecipes, setRecipes } from './store/recipe.actions';

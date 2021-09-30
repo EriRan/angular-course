@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { of } from 'side-project/node_modules/rxjs';
+import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { USER_DATA_LOCAL_STORAGE_KEY } from '../auth.constant';
 import { AuthService } from '../auth.service';

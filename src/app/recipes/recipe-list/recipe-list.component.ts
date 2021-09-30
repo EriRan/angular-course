@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'node_modules/rxjs';
-import { map } from 'side-project/node_modules/rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';
 
