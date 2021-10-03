@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.reducer';
+import { FIREBASE_DATABASE } from '../recipe.constant';
 import { Recipe } from '../recipe.model';
 import { fetchRecipes, setRecipes, storeRecipes } from './recipe.actions';
 
@@ -20,9 +21,7 @@ export class RecipeEffects {
       // Can also add multiple different actions in ofType
       ofType(fetchRecipes),
       switchMap(() => {
-        return this.http.get<Recipe[] | null>(
-          'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json'
-        );
+        return this.http.get<Recipe[] | null>(FIREBASE_DATABASE);
       }),
       map((recipes) => {
         if (!recipes) {
@@ -48,11 +47,7 @@ export class RecipeEffects {
         ofType(storeRecipes),
         withLatestFrom(this.store.select('recipe')),
         switchMap(([ignored, recipesState]) => {
-          return this.http
-            .put(
-              'https://angular-course-9fe36-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
-              recipesState.recipes
-            )
+          return this.http.put(FIREBASE_DATABASE, recipesState.recipes);
         })
       );
     },
